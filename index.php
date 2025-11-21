@@ -226,20 +226,44 @@
             async function recupererTousLesPoints() {
                 let tousLesPoints = [];
                 let page = 1;
-                let totalPages = 1;
+                let continuer = true;
 
                 try {
-                    do {
+                    while (continuer) {
+                        console.log(`Chargement de la page ${page} (accueil)...`);
                         const response = await fetch(`http://s1065353875.onlinehome.fr/ml09_wp/wp-json/wp/v2/point?embed&acf_format=standard&per_page=100&page=${page}`);
 
-                        // Récupérer le nombre total de pages depuis les en-têtes HTTP
-                        totalPages = parseInt(response.headers.get('X-WP-TotalPages')) || 1;
+                        if (!response.ok) {
+                            console.log(`Arrêt du chargement : page ${page} non disponible`);
+                            break;
+                        }
 
                         const data = await response.json();
+
+                        // Si la page ne contient aucun résultat, on arrête
+                        if (!data || data.length === 0) {
+                            console.log(`Arrêt du chargement : aucun résultat à la page ${page}`);
+                            break;
+                        }
+
                         tousLesPoints = tousLesPoints.concat(data);
+                        console.log(`Page ${page} chargée : ${data.length} points`);
+
+                        // Si on a moins de 100 résultats, c'est la dernière page
+                        if (data.length < 100) {
+                            continuer = false;
+                        }
 
                         page++;
-                    } while (page <= totalPages);
+
+                        // Sécurité : limite à 10 pages maximum (1000 points)
+                        if (page > 10) {
+                            console.log('Limite de 10 pages atteinte');
+                            break;
+                        }
+                    }
+
+                    console.log(`Total : ${tousLesPoints.length} points récupérés`);
 
                     // Afficher tous les points sur la carte
                     tousLesPoints.forEach(antenne => {
@@ -254,7 +278,7 @@
                         }
                     });
 
-                    console.log(`${tousLesPoints.length} points chargés sur la carte d'accueil`);
+                    console.log(`${tousLesPoints.length} points affichés sur la carte d'accueil`);
                 } catch (error) {
                     console.error('Erreur de chargement des antennes :', error);
                 }
