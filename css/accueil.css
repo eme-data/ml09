@@ -1,0 +1,838 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: "Open Sans", sans-serif;
+}
+
+:root {
+    --bleu_noir: #092d44;
+    --bleu_cerulean: #27708c;
+    --bleu_claire: #309fb8;
+    --bleu_ciel: #2597cb;
+    --jaune_orange: #f2bb18;
+    --blanc: #ffffff;
+    --gris: #e6e6e6;
+    --noir: #000000;
+
+}
+
+li {
+    list-style: none;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: var(--bleu_cerulean)
+}
+
+a:hover {
+    color: var(--jaune_orange);
+    transition: 0.3s;
+}
+
+h2 {
+    color: var(--bleu_cerulean);
+    font-size: 50px;
+}
+
+h3 {
+    color: var(--bleu_cerulean);
+}
+
+
+.bnt_jaune {
+    min-width: 48px;
+    min-height: 48px;
+    width: fit-content;
+    height: fit-content;
+    background-color: var(--jaune_orange);
+    padding: 10px;
+    border-radius: 8px;
+
+}
+
+.bnt_jaune:hover {
+    color: var(--noir);
+    background-color: var(--bleu_claire);
+    cursor: pointer;
+
+}
+
+.bnt_bleu {
+    min-width: 48px;
+    min-height: 48px;
+    color: var(--noir);
+    width: fit-content;
+    height: fit-content;
+    background-color: var(--bleu_claire);
+    padding: 10px;
+    border-radius: 8px;
+
+}
+
+.bnt_bleu:hover {
+    color: var(--bleu_cerulean);
+    background-color: var(--jaune_orange);
+    cursor: pointer;
+
+}
+
+/*-------------------------------------------------------------------------HEADER IMAGE----------------------------------------------------------------------------------*/
+
+.img_header {
+    width: 100%;
+    max-height: 160vh;
+    overflow: hidden;
+}
+
+.img_header>img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: bottom;
+}
+
+.slogan {
+    color: var(--blanc);
+    width: fit-content;
+    height: fit-content;
+    position: absolute;
+    top: 30%;
+    left: 200px;
+    border-radius: 10px;
+    padding: 0px 0px 0px 70px;
+}
+
+.slogan>h2 {
+    color: var(--blanc);
+    font-size: 80px;
+}
+
+.slogan>p {
+    font-size: 60px;
+}
+
+.slogan>a {
+    font-size: 40px;
+}
+
+/*CLIC RAPIDE*/
+
+/* .clic_rapide {
+    width: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    gap: 13px;
+    top: 670px;
+}
+
+.icon {
+    font-size: 60px;
+}
+
+.clic {
+    width: 160px;
+    height: 172px;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.bleu_claire {
+    background-color: var(--bleu_claire);
+
+}
+
+.bleu_claire:hover {
+    background-color: var(--bleu_cerulean);
+}
+
+.bleu_claire>a {
+    text-align: center;
+}
+
+.bleu_noir {
+    background-color: var(--bleu_noir);
+
+}
+
+.bleu_noir:hover {
+    background-color: var(--jaune_orange);
+}
+
+.bleu_noir>a {
+    text-align: center;
+}
+
+.jaune {
+    background-color: var(--jaune_orange);
+
+}
+
+.jaune:hover {
+    background-color: var(--bleu_ciel);
+}
+
+.jaune>a {
+    text-align: center;
+}
+
+.cerulian {
+    background-color: var(--bleu_cerulean);
+
+}
+
+.cerulian:hover {
+    background-color: var(--bleu_noir);
+}
+
+.cerulian>a {
+    text-align: center;
+} */
+
+
+/* ---------------------------------------------------------------------ACTUALITE------------------------------------------------------------------*/
+
+.actualite {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 15vh 20vh 0vh;
+}
+
+.actualite>h2 {
+    padding: 25px;
+}
+
+.toute_actu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 40px;
+}
+
+.toute_actu>a {
+    font-size: 30px;
+}
+
+.derniere_actu {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin: 20px;
+}
+
+.actu {
+    background-color: var(--gris);
+    border-radius: 10px;
+    width: 800px;
+    height: 300px;
+    display: flex;
+}
+
+.date_actu {
+    color: var(--bleu_noir);
+    font-size: 40px;
+    background-color: var(--jaune_orange);
+    border-radius: 10px;
+    width: 40%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+    overflow: hidden;
+}
+
+.type_actu {
+    color: var(--bleu_noir);
+    font-size: 30px;
+    width: 60%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    padding: 30px;
+    overflow: hidden;
+}
+
+.type_actu>h3 {
+    color: var(--bleu_noir);
+}
+
+.atelier-card {
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: block;
+}
+
+.atelier-card:hover {
+    transform: translateY(-4px);
+}
+
+.atelier-description {
+    display: none;
+    width: 800px;
+    height: fit-content;
+    padding: 20px;
+    font-size: 25px;
+    background-color: var(--gris);
+    border-radius: 10px;
+    box-sizing: border-box;
+    overflow: auto;
+}
+
+
+
+
+/* ---------------------------------------------------------------------TEMOIGNAGE------------------------------------------------------------------*/
+
+.box_temoignage {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin: 20px;
+}
+
+.temoignage {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 15vh 20vh 0vh;
+}
+
+.temoignage>h2 {
+    padding: 25px;
+}
+
+
+.temoigne {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.temoigne>p {
+    font-size: 25px;
+    width: 1200px;
+    height: fit-content;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    padding: 2rem;
+}
+
+.img_jeune {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 2rem;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.img_jeune img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.temoigne br+br {
+    display: none;
+}
+
+.temoigne p strong {
+    display: block;
+    margin-top: 1rem;
+    color: #2c3e50;
+    font-style: italic;
+}
+
+
+
+
+
+/* ---------------------------------------------------------------------TROUVEZ------------------------------------------------------------------*/
+
+.trouve {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 15vh 20vh 0vh;
+}
+
+.trouve>h2 {
+    padding: 25px;
+}
+
+.map {
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+
+
+/* -----------------------------------------------RESPONSIVE-------------------------------------------------- */
+
+@media(max-width: 2068px) {
+
+    /*----------------Header----------------*/
+
+    .slogan {
+        left: 80px;
+    }
+
+    .slogan>h2 {
+        color: var(--blanc);
+        font-size: 50px
+    }
+
+    .slogan>p {
+        font-size: 40px;
+    }
+
+    .slogan>a {
+        font-size: 25px;
+    }
+
+    /*----------------Actualite----------------*/
+
+    .actualite>h2 {
+        font-size: 40px;
+    }
+
+    .toute_actu>a {
+        font-size: 25px;
+    }
+
+    .actu {
+        width: 500px;
+        height: 200px;
+    }
+
+    .date_actu {
+        font-size: 30px;
+    }
+
+    .type_actu {
+        font-size: 25px;
+    }
+
+    .atelier-description {
+        font-size: 20px;
+        width: 500px;
+    }
+
+    /*----------------Temoignage----------------*/
+
+    .temoignage>h2 {
+        font-size: 40px;
+    }
+
+    .temoigne>p {
+        font-size: 20px;
+        width: 600px;
+    }
+
+    .img_jeune {
+        width: 200px;
+        height: 200px;
+    }
+
+    /*----------------Trouve----------------*/
+
+    .trouve>h2 {
+        font-size: 40px;
+    }
+
+}
+
+
+@media(max-width: 1438px) {
+
+    /*----------------Header----------------*/
+
+    .slogan {
+        top: 25%;
+        left: 100px;
+        padding: 0 0 0 0;
+    }
+
+    .slogan>h2 {
+        font-size: 40px;
+    }
+
+    .slogan>p {
+        font-size: 30px;
+    }
+
+    /*----------------Actualite----------------*/
+
+    .actualite {
+        padding: 15vh 5vh 0vh;
+    }
+
+    .toute_actu>a {
+        font-size: 20px;
+    }
+
+    .actu {
+        width: 400px;
+        height: 150px;
+    }
+
+    .date_actu {
+        font-size: 20px;
+    }
+
+    .type_actu {
+        font-size: 20px;
+    }
+
+    .atelier-description {
+        font-size: 15px;
+        width: 400px;
+    }
+
+    /*----------------Temoignage----------------*/
+
+    .temoignage {
+        padding: 15vh 5vh 0vh;
+    }
+
+    .temoignage>h2 {
+        font-size: 40px;
+    }
+
+    .temoigne>p {
+        font-size: 20px;
+        width: 500px;
+        min-height: 130px;
+    }
+
+    .img_jeune {
+        width: 150px;
+        height: 150px;
+    }
+
+    /*----------------Trouve----------------*/
+
+    .trouve {
+        padding: 15vh 5vh 0vh;
+    }
+
+    .trouve>h2 {
+        font-size: 40px;
+    }
+}
+
+
+@media(max-width: 1050px) {
+
+    /*----------------Header----------------*/
+
+    .slogan {
+        top: 20%;
+        left: 80px;
+    }
+
+    .slogan>h2 {
+        font-size: 30px;
+    }
+
+    .slogan>p {
+        font-size: 20px;
+    }
+
+    .slogan>a {
+        font-size: 20px;
+    }
+
+    /*----------------Actualite----------------*/
+
+    .actualite {
+        padding: 5vh 5vh 0vh;
+    }
+
+    .actualite>h2 {
+        font-size: 35px;
+    }
+
+    .toute_actu>a {
+        font-size: 25px;
+    }
+
+    .actu {
+        width: 500px;
+        height: 200px;
+    }
+
+    .date_actu {
+        font-size: 25px;
+    }
+
+    .type_actu {
+        font-size: 25px;
+    }
+
+    .atelier-description {
+        font-size: 20px;
+        width: 500px;
+    }
+
+
+    /*----------------Temoignage----------------*/
+
+    .temoignage {
+        padding: 5vh 5vh 0vh;
+    }
+
+    .temoignage>h2 {
+        font-size: 35px;
+    }
+
+    .img_jeune {
+        width: 150px;
+        height: 150px;
+        margin: 20px 0 20px 0;
+    }
+
+    .temoigne,
+    .temoigne:nth-child(even) {
+        flex-direction: column;
+    }
+
+    /*----------------Trouve----------------*/
+
+    .trouve {
+        padding: 5vh 5vh 0vh;
+    }
+
+    .trouve>h2 {
+        font-size: 35px;
+    }
+
+    .map {
+        height: 60vh;
+    }
+}
+
+@media(max-width: 833px) {
+
+    /*----------------Header----------------*/
+
+    .slogan {
+        top: 15%;
+        left: 50px;
+    }
+
+    .slogan>h2 {
+        font-size: 20px;
+    }
+
+    .slogan>p {
+        font-size: 15px;
+    }
+
+    .slogan>a {
+        font-size: 10px;
+    }
+
+    /*----------------Actualite----------------*/
+
+    .actualite {
+        padding: 5vh 5vh 0vh;
+    }
+
+    .actualite>h2 {
+        font-size: 30px;
+    }
+
+    .toute_actu>a {
+        font-size: 20px;
+    }
+
+    .actu {
+        width: 300px;
+        height: 150px;
+    }
+
+    .date_actu {
+        font-size: 15px;
+    }
+
+    .type_actu {
+        font-size: 18px;
+    }
+
+    .derniere_actu {
+        margin: 0;
+    }
+
+    .atelier-description {
+        font-size: 20px;
+        width: 300px;
+    }
+
+    /*----------------Temoignage----------------*/
+
+    .temoignage {
+        padding: 5vh 5vh 0vh;
+    }
+
+    .temoignage>h2 {
+        font-size: 30px;
+    }
+
+    .temoigne>p {
+        font-size: 18px;
+        width: 300px;
+    }
+
+    .img_jeune {
+        width: 150px;
+        height: 150px;
+    }
+
+    .box_temoignage {
+        margin: 0;
+    }
+
+    /*----------------Trouve----------------*/
+
+    .trouve {
+        padding: 5vh 5vh 0vh;
+    }
+
+    .trouve>h2 {
+        font-size: 30px;
+    }
+
+    #map {
+        width: 90%;
+    }
+
+}
+
+@media(max-width: 430px) {
+
+    /*----------------Header----------------*/
+
+    .slogan {
+        top: 10%;
+    }
+
+    /*----------------Actualite----------------*/
+
+    .actualite>h2 {
+        font-size: 25px;
+    }
+
+    .toute_actu>a {
+        font-size: 18px;
+    }
+
+    .actu {
+        width: 250px;
+        height: 100px;
+    }
+
+    .date_actu {
+        font-size: 13px;
+    }
+
+    .type_actu {
+        font-size: 13px;
+    }
+
+    .atelier-description {
+        font-size: 10px;
+        width: 250px;
+    }
+
+    /*----------------Temoignage----------------*/
+
+    .temoignage>h2 {
+        font-size: 25px;
+    }
+
+    .temoigne>p {
+        font-size: 13px;
+        width: 250px;
+    }
+
+    /*----------------Trouve----------------*/
+
+
+    .trouve>h2 {
+        font-size: 25px;
+    }
+}
+
+
+@media(max-width: 340px) {
+
+    /*----------------Header----------------*/
+
+
+    .slogan>h2 {
+        font-size: 15px;
+    }
+
+    .slogan>p {
+        font-size: 10px;
+    }
+
+    /*----------------Actualite----------------*/
+
+    .actu {
+        width: 250px;
+        height: 100px;
+    }
+
+    .date_actu {
+        font-size: 15px;
+    }
+
+    .type_actu {
+        font-size: 15px;
+    }
+
+    .atelier-description {
+        width: 250px;
+    }
+}

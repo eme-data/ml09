@@ -1,0 +1,265 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: "Open Sans", sans-serif;
+}
+
+:root {
+    --bleu_noir: #092d44;
+    --bleu_cerulean: #27708c;
+    --bleu_claire: #309fb8;
+    --bleu_ciel: #2597cb;
+    --jaune_orange: #f2bb18;
+    --blanc: #ffffff;
+    --gris: #e6e6e6;
+    --noir: #000000;
+
+}
+
+li {
+    list-style: none;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: var(--bleu_cerulean)
+}
+
+a:hover {
+    color: var(--jaune_orange);
+    transition: 0.3s;
+}
+
+h2 {
+    color: var(--bleu_cerulean);
+    font-size: 30px;
+}
+
+h3 {
+    color: var(--bleu_cerulean);
+}
+
+
+.bnt_jaune {
+    min-width: 48px;
+    min-height: 48px;
+    width: fit-content;
+    height: fit-content;
+    background-color: var(--jaune_orange);
+    padding: 10px;
+    border-radius: 8px;
+
+}
+
+.bnt_jaune:hover {
+    color: var(--noir);
+    background-color: var(--bleu_claire);
+    cursor: pointer;
+
+}
+
+.bnt_bleu {
+    min-width: 48px;
+    min-height: 48px;
+    color: var(--noir);
+    width: fit-content;
+    height: fit-content;
+    background-color: var(--bleu_claire);
+    padding: 10px;
+    border-radius: 8px;
+
+}
+
+.bnt_bleu:hover {
+    color: var(--bleu_cerulean);
+    background-color: var(--jaune_orange);
+    cursor: pointer;
+
+}
+
+body {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+/*-------------------------------------------------------------------------HEADER DE LA PAGE----------------------------------------------------------------------------------*/
+
+.img_header {
+    width: 100%;
+    max-height: 160vh;
+    overflow: hidden;
+}
+
+.img_header>img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: bottom;
+}
+
+/*----------------------------------------------------------------------PRESENTATION----------------------------------------------------------------------------------*/
+
+
+.p_presentation {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10vh 20vh;
+}
+
+/*--------------------------------------------------------------------VIGNETTE----------------------------------------------------------------------------------*/
+
+.vignette_box {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.haut_v {
+    display: flex;
+    gap: 20px;
+}
+
+.bas_v {
+    display: flex;
+    gap: 20px;
+}
+
+.vignette {
+    color: var(--blanc);
+    font-size: 20px;
+    width: 184px;
+    height: 189px;
+    background-color: var(--bleu_claire);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bleu_claire {
+    background-color: var(--bleu_claire);
+}
+
+.bleu_noir {
+    background-color: var(--bleu_noir);
+}
+
+.jaune {
+    background-color: var(--jaune_orange);
+}
+
+.bleu_gris {
+    background-color: var(--bleu_cerulean);
+}
+
+.bleu_ciel {
+    background-color: var(--bleu_ciel);
+}
+
+/*--------------------------------------------------------------------HORAIRE----------------------------------------------------------------------------------*/
+
+.Horaire {
+    padding: 10vh 20vh 10vh;
+}
+
+
+/*------------------------------------------------------------------------CONTACT----------------------------------------------------------------------------------*/
+
+
+.contact {
+    padding: 0vh 20vh 10vh;
+}
+
+/*-------------------------------------------------------------------------MAP----------------------------------------------------------------------------------*/
+
+
+.map {
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 20vh;
+
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+
+
+/*--------------------------------------------------------------------RESPONSIVE----------------------------------------------------------------------------------*/
+
+
+@media(max-width: 430px) {
+
+    .p_presentation {
+        padding: 10vh 5vh;
+    }
+
+    .vignette {
+        font-size: 15px;
+        width: 100px;
+        height: 105px;
+    }
+
+    .Horaire {
+        padding: 10vh 5vh 10vh;
+    }
+
+    .contact {
+        padding: 0 5vh 10vh;
+    }
+
+    .map {
+        height: 50vh;
+        padding: 0 5vh;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+}
+
+@media(max-width: 320px) {
+
+    .vignette_box {
+        gap: 10px;
+    }
+
+    .haut_v {
+        gap: 10px;
+    }
+
+    .bas_v {
+        gap: 10px;
+    }
+
+    .vignette {
+        width: 80px;
+        height: 85px;
+    }
+
+    body {
+        font-size: 10px;
+    }
+}

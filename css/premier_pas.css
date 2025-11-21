@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: "Open Sans", sans-serif;
+}
+
+:root {
+    --bleu_noir: #092d44;
+    --bleu_cerulean: #27708c;
+    --bleu_claire: #309fb8;
+    --bleu_ciel: #2597cb;
+    --jaune_orange: #f2bb18;
+    --blanc: #ffffff;
+    --gris: #e6e6e6;
+    --noir: #000000;
+
+}
+
+li {
+    list-style: none;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: var(--bleu_cerulean)
+}
+
+a:hover {
+    color: var(--jaune_orange);
+    transition: 0.3s;
+}
+
+h2 {
+    color: var(--bleu_cerulean);
+    font-size: 30px;
+}
+
+h3 {
+    color: var(--bleu_cerulean);
+}
+
+
+.bnt_jaune {
+    min-width: 48px;
+    min-height: 48px;
+    width: fit-content;
+    height: fit-content;
+    background-color: var(--jaune_orange);
+    padding: 10px;
+    border-radius: 8px;
+
+}
+
+.bnt_jaune:hover {
+    color: var(--noir);
+    background-color: var(--bleu_claire);
+    cursor: pointer;
+
+}
+
+.bnt_bleu {
+    min-width: 48px;
+    min-height: 48px;
+    color: var(--noir);
+    width: fit-content;
+    height: fit-content;
+    background-color: var(--bleu_claire);
+    padding: 10px;
+    border-radius: 8px;
+
+}
+
+.bnt_bleu:hover {
+    color: var(--bleu_cerulean);
+    background-color: var(--jaune_orange);
+    cursor: pointer;
+
+}
+
+/*-------------------------------------------------------------------------HEADER IMAGE----------------------------------------------------------------------------------*/
+
+.img_header {
+    width: 100%;
+    max-height: 160vh;
+    overflow: hidden;
+}
+
+.img_header>img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: bottom;
+}
+
+
+main {
+    padding: 5vw 10vw;
+}
+
+/* -----------------------------------------------  Map ------------------------------------------------------------------*/
+
+.trouve {
+    padding: 0 20vh;
+}
+
+.trouve>h2 {
+    padding: 25px;
+}
+
+.map {
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 30px;
+
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+
+
+
+/* -----------------------------------------------RESPONSIVE-------------------------------------------------- */
+
+
+@media(max-width: 430px) {
+
+    h2 {
+        font-size: 20px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    p {
+        font-size: 15px;
+    }
+
+    .map {
+        height: 50vh;
+    }
+
+
+}
+
+@media(max-width: 380px) {}
+
+
+@media(max-width: 330px) {}

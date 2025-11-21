@@ -1,0 +1,283 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: "Open Sans", sans-serif;
+}
+
+:root {
+    --bleu_noir: #092d44;
+    --bleu_cerulean: #27708c;
+    --bleu_claire: #309fb8;
+    --bleu_ciel: #2597cb;
+    --jaune_orange: #f2bb18;
+    --blanc: #ffffff;
+    --gris: #e6e6e6;
+    --noir: #000000;
+
+}
+
+li {
+    list-style: none;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: var(--bleu_cerulean)
+}
+
+a:hover {
+    color: var(--jaune_orange);
+    transition: 0.3s;
+}
+
+.bnt_jaune {
+    min-width: 48px;
+    min-height: 48px;
+    width: fit-content;
+    height: fit-content;
+    background-color: var(--jaune_orange);
+    padding: 10px;
+    border-radius: 8px;
+
+}
+
+.bnt_jaune:hover {
+    color: var(--noir);
+    background-color: var(--bleu_claire);
+    cursor: pointer;
+
+}
+
+.bnt_bleu {
+    min-width: 48px;
+    min-height: 48px;
+    color: var(--noir);
+    width: fit-content;
+    height: fit-content;
+    background-color: var(--bleu_claire);
+    padding: 10px;
+    border-radius: 8px;
+
+}
+
+.bnt_bleu:hover {
+    color: var(--bleu_cerulean);
+    background-color: var(--jaune_orange);
+    cursor: pointer;
+
+}
+
+
+/* -------------------------------------------------------------------------------MENU------------------------------------------------------------------------------------------ */
+
+
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: var(--blanc);
+    z-index: 9999;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 50px;
+    font-weight: bold;
+}
+
+.navbar>ul {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.navbar>ul>li {
+    width: fit-content;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    height: 60px;
+}
+
+.logo>img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.link>li>.dropdown {
+    left: 0;
+    width: 100%;
+    background-color: var(--gris);
+    top: 75px;
+    position: absolute;
+    z-index: 999;
+    padding: 30px 0;
+    display: none;
+}
+
+.dropdown>ul {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+}
+
+.dropdown>ul>li {
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown>ul>li>a{
+    font-size: 15px;
+}
+
+.dropdown>ul>li>p{
+    font-size: 15px;
+}
+
+.dropdown>ul>li>h3{
+    font-size: 15px;
+}
+
+.link>li:hover>.dropdown {
+    display: block;
+}
+
+.img_box {
+    width: 300px;
+    height: 300px;
+}
+
+.img_box>img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* -----------------------------------------------------------------------------DROP MENU---------------------------------------------------------------------- */
+
+
+
+.dropdown_menu {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 40px;
+    width: 100%;
+    height: fit-content;
+    padding: 30px 0;
+    background-color: var(--gris);
+    backdrop-filter: blur(15px);
+    overflow: hidden;
+    transition: height 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.dropdown_menu.open {
+    height: auto;
+    display: block;
+    z-index: 100;
+
+}
+
+.dropdown_menu>ul>li {
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.dropdown_menu>ul>li>.dropdown {
+    left: 0;
+    width: 100%;
+    padding: 30px 80px;
+    top: 0;
+    position: relative;
+    z-index: 999;
+    display: none;
+}
+
+.dropdown>ul {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.dropdown_menu>ul>li>.dropdown>ul {
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown_menu .dropdown.show {
+    display: block !important;
+}
+
+.navbar>.toggle_btn {
+    display: none;
+}
+
+.dropdown_menu {
+    display: none;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+
+
+
+/* -----------------------------------------------------------------------------RESPONSIVE MENU------------------------------------------------------ */
+
+
+
+@media(max-width: 992px) {
+
+    .navbar {
+        justify-content: space-between;
+        padding: 0 20px 0 20px;
+    }
+
+    .navbar>.link,
+    .navbar>.menu_btn {
+        display: none;
+    }
+}
+
+@media(max-width: 770px) {
+    .dropdown_menu {
+        display: none;
+    }
+
+    .navbar>.toggle_btn {
+        display: flex;
+    }
+
+    .logo {
+        padding: 5px;
+    }
+}
+
+
+@media(max-width: 430px) {
+
+
+    .logo {
+        height: 40px;
+    }
+}
