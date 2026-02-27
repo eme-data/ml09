@@ -32,7 +32,7 @@
 
 <script>
     const API_URL_ENTETE = "https://ml09.org/ml09_wp/wp-json/wp/v2/entreprise_texte?embed&acf_format=standard";
-    const CACHE_KEY_ENTETE = "img_entete_cache";
+    const CACHE_KEY_ENTETE = "img_entete_entreprise";
     const CACHE_DURATION_ENTETE = 60 * 60 * 1000; // 1 heure
 
     function setImgEntete(img) {
@@ -83,13 +83,17 @@
             fetch('https://ml09.org/ml09_wp/wp-json/wp/v2/entreprise_texte?embed&acf_format=standard')
                 .then(res => res.json())
                 .then(data => {
+                    if (!data || !data[0] || !data[0].acf) return;
                     const acf = data[0].acf;
+                    const logoHTML = (acf.logo_charte && acf.logo_charte.url)
+                        ? `<img src="${acf.logo_charte.url}" alt="${acf.logo_charte.alt || ''}">`
+                        : '';
                     document.getElementById('texte_container').innerHTML = `
             <div>
-                <p>${acf.texte}</p>
-                <img src="${acf.logo_charte.url}" alt="${acf.logo_charte.alt || ''}">
-                <p>${acf.texte2}</p>
-                <p>${acf.texte3}</p>
+                <p>${acf.texte || ''}</p>
+                ${logoHTML}
+                <p>${acf.texte2 || ''}</p>
+                <p>${acf.texte3 || ''}</p>
             </div>
         `;
                 })

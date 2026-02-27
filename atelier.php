@@ -26,7 +26,7 @@
 
 <script>
     const API_URL_ENTETE = "https://ml09.org/ml09_wp/wp-json/wp/v2/atelier_texte?embed&acf_format=standard";
-    const CACHE_KEY_ENTETE = "img_entete_cache";
+    const CACHE_KEY_ENTETE = "img_entete_atelier";
     const CACHE_DURATION_ENTETE = 60 * 60 * 1000; // 1 heure
 
     function setImgEntete(img) {
@@ -80,7 +80,9 @@
             fetch('https://ml09.org/ml09_wp/wp-json/wp/v2/atelier_texte?embed&acf_format=standard')
             .then(res => res.json())
             .then(data => {
-            document.getElementById('texte_container').innerHTML = data[0].acf.texte;
+                if (data && data[0] && data[0].acf) {
+                    document.getElementById('texte_container').innerHTML = data[0].acf.texte || '';
+                }
             })
             .catch(err => console.error('Erreur lors du chargement du texte :', err));
         </script>

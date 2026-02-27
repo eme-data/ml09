@@ -55,7 +55,7 @@
 fetch("https://ml09.org/ml09_wp/wp-json/wp/v2/footer?embed&acf_format=standard")
     .then(response => response.json())
     .then(data => {
-        console.log(data);
+        if (!data || !data[0] || !data[0].acf) return;
         let footer = "";
 
         // On récupère uniquement le premier élément du tableau
@@ -64,24 +64,24 @@ fetch("https://ml09.org/ml09_wp/wp-json/wp/v2/footer?embed&acf_format=standard")
         footer = `
         <div class="footer-container">
             <div class="footer-logo">
-                <img src="${ligne.acf.logo_mission_locale ? ligne.acf.logo_mission_locale.url : ''}" 
+                <img src="${ligne.acf.logo_mission_locale ? ligne.acf.logo_mission_locale.url : ''}"
      alt="Logo Mission Locale Jeune Ariège" class="footer-logo">
                 <div class="footer-social">
-                    <a href="${ligne.acf.instagram}" class="social-icon"><i class="fab fa-instagram"></i></a>
-                    <a href="${ligne.acf.facebook}" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-                    <a href="${ligne.acf.youtube}" class="social-icon"><i class="fa-brands fa-youtube"></i></a>
-                    <a href="${ligne.acf.tik_tok}" class="social-icon"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="${ligne.acf.instagram || '#'}" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="${ligne.acf.facebook || '#'}" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="${ligne.acf.youtube || '#'}" class="social-icon"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="${ligne.acf.tik_tok || '#'}" class="social-icon"><i class="fa-brands fa-tiktok"></i></a>
                 </div>
             </div>
 
             <div class="footer-section contact_footer">
                 <h3 style="color:#ffffff;">Siège Social</h3>
-                <p>${ligne.acf.siege_social}</p>
+                <p>${ligne.acf.siege_social || ''}</p>
             </div>
 
             <div class="footer-section hours">
                 <h3 style="color:#ffffff;">Horaires</h3>
-                <p>${ligne.acf.horaire}</p>
+                <p>${ligne.acf.horaire || ''}</p>
             </div>
 
         </div>

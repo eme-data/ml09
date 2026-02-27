@@ -24,7 +24,6 @@ fetch('https://ml09.org/ml09_wp/wp-json/wp/v2/point_paej?embed&acf_format=standa
       console.error('Réponse API inattendue pour les points PAEJ :', data);
       return;
     }
-    console.log(`${data.length} points PAEJ chargés`);
     data.forEach(antenne => {
       if (!antenne.acf || !antenne.acf.latitude || !antenne.acf.longitude) return;
       const marker = L.marker([antenne.acf.latitude, antenne.acf.longitude]).addTo(map);

@@ -26,7 +26,7 @@
 
 <script>
     const API_URL_ENTETE = "https://ml09.org/ml09_wp/wp-json/wp/v2/evenement_texte?embed&acf_format=standard";
-    const CACHE_KEY_ENTETE = "img_entete_cache";
+    const CACHE_KEY_ENTETE = "img_entete_evenement";
     const CACHE_DURATION_ENTETE = 60 * 60 * 1000; // 1 heure
 
     function setImgEntete(img) {
@@ -80,7 +80,9 @@
             fetch('https://ml09.org/ml09_wp/wp-json/wp/v2/evenement_texte?embed&acf_format=standard')
             .then(res => res.json())
             .then(data => {
-            document.getElementById('texte_container').innerHTML = data[0].acf.texte;
+            if (data && data[0] && data[0].acf) {
+                document.getElementById('texte_container').innerHTML = data[0].acf.texte;
+            }
             })
             .catch(err => console.error('Erreur lors du chargement du texte :', err));
         </script>
@@ -99,18 +101,43 @@
 
             // ------------------------------------ Liste des evenements ------------------------------------
 
-fetch("https://ml09.org/ml09_wp/wp-json/wp/v2/evenement?embed&acf_format=standard")
+    function parseDateACF(dateStr) {
+        if (!dateStr) return null;
+        if (dateStr.includes('/')) {
+            const [day, month, year] = dateStr.split('/').map(Number);
+            return new Date(year, month - 1, day);
+        }
+        if (dateStr.includes('-')) {
+            const [year, month, day] = dateStr.split('-').map(Number);
+            return new Date(year, month - 1, day);
+        }
+        if (dateStr.length === 8 && !isNaN(dateStr)) {
+            return new Date(parseInt(dateStr.substring(0, 4)), parseInt(dateStr.substring(4, 6)) - 1, parseInt(dateStr.substring(6, 8)));
+        }
+        return null;
+    }
+
+fetch("https://ml09.org/ml09_wp/wp-json/wp/v2/evenement?embed&acf_format=standard&per_page=100")
     .then(response => response.json())
     .then(data => {
         const evenementList = document.querySelector('.box_evenement');
 
         // Trier par date (du plus proche au plus éloigné)
-        const sortedData = data.sort((a, b) => new Date(b.acf.date) - new Date(a.acf.date)); 
+        const sortedData = data.sort((a, b) => {
+            const dateA = parseDateACF(a.acf.date);
+            const dateB = parseDateACF(b.acf.date);
+            return (dateB || 0) - (dateA || 0);
+        });
 
         // Fonction pour afficher les evenements
         const displayevenements = (evenements) => {
             evenementList.innerHTML = '';
             evenements.forEach(evenement => {
+                const dateObj = parseDateACF(evenement.acf.date);
+                const formattedDate = (dateObj && !isNaN(dateObj.getTime()))
+                    ? dateObj.toLocaleDateString('fr-FR', { day: '2-digit', month: 'long' })
+                    : "Date non définie";
+
                 const evenementItem = document.createElement('a');
                 evenementItem.href = 'detail_evenement.php?id=' + evenement.id;
                 evenementItem.classList.add('evenement-card');
@@ -119,15 +146,15 @@ fetch("https://ml09.org/ml09_wp/wp-json/wp/v2/evenement?embed&acf_format=standar
                     <div class="evenement">
                         <p class="date_evenement">
                             <span style="text-transform: uppercase;">
-                                <b>${new Date(evenement.acf.date).toLocaleDateString('fr-FR', { day: '2-digit', month: 'long' })}</b>
+                                <b>${formattedDate}</b>
                             </span>
                         </p>
                         <div class="type_evenement">
-                            <p style="font-weight: bold;">${evenement.acf.nom}</p>
-                            <p>${evenement.acf.ville}</p>
+                            <p style="font-weight: bold;">${evenement.acf.nom || ''}</p>
+                            <p>${evenement.acf.ville || ''}</p>
                         </div>
                     </div>
-                
+
                 `;
                 evenementList.appendChild(evenementItem);
             });

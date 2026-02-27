@@ -35,7 +35,7 @@
 
 <script>
     const API_URL_ENTETE = "https://ml09.org/ml09_wp/wp-json/wp/v2/paej?embed&acf_format=standard";
-    const CACHE_KEY_ENTETE = "img_entete_cache";
+    const CACHE_KEY_ENTETE = "img_entete_paej";
     const CACHE_DURATION_ENTETE = 60 * 60 * 1000; // 1 heure
 
     function setImgEntete(img) {
@@ -84,7 +84,9 @@
             fetch('https://ml09.org/ml09_wp/wp-json/wp/v2/paej?embed&acf_format=standard')
             .then(res => res.json())
             .then(data => {
-            document.getElementById('p_presentation').innerHTML = data[0].acf.presentation;
+                if (data && data[0] && data[0].acf) {
+                    document.getElementById('p_presentation').innerHTML = data[0].acf.presentation || '';
+                }
             })
             .catch(err => console.error('Erreur lors du chargement du texte :', err));
         </script>
@@ -132,7 +134,9 @@
             fetch('https://ml09.org/ml09_wp/wp-json/wp/v2/paej?embed&acf_format=standard')
             .then(res => res.json())
             .then(data => {
-            document.getElementById('horaire').innerHTML = data[0].acf.horaire;
+                if (data && data[0] && data[0].acf) {
+                    document.getElementById('horaire').innerHTML = data[0].acf.horaire || '';
+                }
             })
             .catch(err => console.error('Erreur lors du chargement du texte :', err));
         </script>
@@ -148,7 +152,9 @@
             fetch('https://ml09.org/ml09_wp/wp-json/wp/v2/paej?embed&acf_format=standard')
             .then(res => res.json())
             .then(data => {
-            document.getElementById('contact').innerHTML = data[0].acf.contact;
+                if (data && data[0] && data[0].acf) {
+                    document.getElementById('contact').innerHTML = data[0].acf.contact || '';
+                }
             })
             .catch(err => console.error('Erreur lors du chargement du texte :', err));
         </script>

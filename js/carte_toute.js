@@ -24,7 +24,6 @@ fetch('https://ml09.org/ml09_wp/wp-json/wp/v2/point?embed&acf_format=standard&pe
       console.error('Réponse API inattendue pour les points :', data);
       return;
     }
-    console.log(`${data.length} points chargés`);
     data.forEach(antenne => {
       if (!antenne.acf || !antenne.acf.latitude || !antenne.acf.longitude) return;
       const marker = L.marker([antenne.acf.latitude, antenne.acf.longitude]).addTo(map);

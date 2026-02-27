@@ -341,7 +341,6 @@
                         console.error('Réponse API inattendue pour les points :', data);
                         return;
                     }
-                    console.log(`${data.length} points chargés sur la page d'accueil`);
                     data.forEach(antenne => {
                         if (!antenne.acf || !antenne.acf.latitude || !antenne.acf.longitude) return;
                         const marker = L.marker([antenne.acf.latitude, antenne.acf.longitude]).addTo(map);
