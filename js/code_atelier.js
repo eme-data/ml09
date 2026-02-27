@@ -47,22 +47,35 @@
 //     })
 //     .catch(error => console.error('Erreur lors du chargement des ateliers :', error));
 
+// Fonction universelle pour parser une date ACF (DD/MM/YYYY, YYYY-MM-DD ou YYYYMMDD)
+function parseDateACF(dateStr) {
+    if (!dateStr) return null;
+    if (dateStr.includes('/')) {
+        const [day, month, year] = dateStr.split('/').map(Number);
+        return new Date(year, month - 1, day);
+    }
+    if (dateStr.includes('-')) {
+        const [year, month, day] = dateStr.split('-').map(Number);
+        return new Date(year, month - 1, day);
+    }
+    if (dateStr.length === 8 && !isNaN(dateStr)) {
+        return new Date(parseInt(dateStr.substring(0, 4)), parseInt(dateStr.substring(4, 6)) - 1, parseInt(dateStr.substring(6, 8)));
+    }
+    return null;
+}
+
 fetch("https://ml09.org/ml09_wp/wp-json/wp/v2/atelier?embed&acf_format=standard")
     .then(response => response.json())
     .then(data => {
         const atelierList = document.querySelector('.derniere_actu');
-
-        // Fonction pour convertir DD/MM/YYYY en timestamp
-        const parseDate = (dateStr) => {
-            if (!dateStr) return 0;
-            const parts = dateStr.split('/');
-            if (parts.length !== 3) return 0;
-            const [day, month, year] = parts.map(Number);
-            return new Date(year, month - 1, day).getTime();
-        };
+        if (!atelierList) return;
 
         // Trier par date chronologique
-        const sortedData = data.sort((a, b) => parseDate(a.acf.date) - parseDate(b.acf.date));
+        const sortedData = data.sort((a, b) => {
+            const dateA = parseDateACF(a.acf.date_atelier);
+            const dateB = parseDateACF(b.acf.date_atelier);
+            return (dateA || 0) - (dateB || 0);
+        });
 
         // Ne garder que les 2 premiers ateliers
         const latestAteliers = sortedData.slice(0, 2);
@@ -72,15 +85,16 @@ fetch("https://ml09.org/ml09_wp/wp-json/wp/v2/atelier?embed&acf_format=standard"
             const atelierItem = document.createElement('div');
             atelierItem.classList.add('atelier-card');
 
-            const displayDate = atelier.acf.date_atelier
-                ? atelier.acf.date_atelier.split('/').reverse().join('-') // juste pour afficher ISO si besoin
+            const dateObj = parseDateACF(atelier.acf.date_atelier);
+            const formattedDate = (dateObj && !isNaN(dateObj.getTime()))
+                ? dateObj.toLocaleDateString('fr-FR', { day: '2-digit', month: 'long' })
                 : "Date non précisée";
 
             atelierItem.innerHTML = `
                 <div class="actu">
                     <p class="date_actu">
                         <span style="text-transform: uppercase;">
-                            <b>${new Date(parseDate(atelier.acf.date_atelier)).toLocaleDateString('fr-FR', { day: '2-digit', month: 'long' })}</b>
+                            <b>${formattedDate}</b>
                         </span>
                     </p>
                     <div class="type_actu">
@@ -113,13 +127,11 @@ fetch("https://ml09.org/ml09_wp/wp-json/wp/v2/atelier?embed&acf_format=standard"
         const atelierList = document.querySelector('.box_actu');
         const filterAtelier = document.getElementById('atelier-filter');
 
-        // Trier par date_atelier décroissante (du plus éloigné au plus proche)
+        // Trier par date_atelier décroissante (du plus récent au plus ancien)
         const sortedData = data.sort((a, b) => {
-            const [yearA, monthA, dayA] = a.acf.date_atelier.split('-');
-            const [yearB, monthB, dayB] = b.acf.date_atelier.split('-');
-            const dateA = new Date(yearA, monthA - 1, dayA);
-            const dateB = new Date(yearB, monthB - 1, dayB);
-            return dateB - dateA; // la plus grande date en premier
+            const dateA = parseDateACF(a.acf.date_atelier);
+            const dateB = parseDateACF(b.acf.date_atelier);
+            return (dateB || 0) - (dateA || 0);
         });
 
         // Fonction pour afficher les ateliers
@@ -129,14 +141,14 @@ fetch("https://ml09.org/ml09_wp/wp-json/wp/v2/atelier?embed&acf_format=standard"
                 const atelierItem = document.createElement('div');
                 atelierItem.classList.add('atelier-card');
 
-                const [year, month, day] = atelier.acf.date_atelier.split('-');
-                const formattedDate = new Date(year, month - 1, day);
+                const formattedDateObj = parseDateACF(atelier.acf.date_atelier);
+                const formattedDate = (formattedDateObj && !isNaN(formattedDateObj.getTime())) ? formattedDateObj : null;
 
                 atelierItem.innerHTML = `
                     <div class="actu">
                         <p class="date_actu">
                             <span style="text-transform: uppercase;">
-                                <b>${formattedDate.toLocaleDateString('fr-FR', { day: '2-digit', month: 'long' })}</b>
+                                <b>${formattedDate ? formattedDate.toLocaleDateString('fr-FR', { day: '2-digit', month: 'long' }) : 'Date non précisée'}</b>
                             </span>
                         </p>
                         <div class="type_actu">

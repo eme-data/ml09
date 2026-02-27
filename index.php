@@ -91,6 +91,29 @@
         </div>
 
         <script>
+    // Fonction pour parser une date ACF (format DD/MM/YYYY ou YYYY-MM-DD)
+    function parseDateACF(dateStr) {
+        if (!dateStr) return null;
+        // Format DD/MM/YYYY
+        if (dateStr.includes('/')) {
+            const [day, month, year] = dateStr.split('/').map(Number);
+            return new Date(year, month - 1, day);
+        }
+        // Format YYYY-MM-DD
+        if (dateStr.includes('-')) {
+            const [year, month, day] = dateStr.split('-').map(Number);
+            return new Date(year, month - 1, day);
+        }
+        // Format YYYYMMDD
+        if (dateStr.length === 8 && !isNaN(dateStr)) {
+            const year = parseInt(dateStr.substring(0, 4));
+            const month = parseInt(dateStr.substring(4, 6));
+            const day = parseInt(dateStr.substring(6, 8));
+            return new Date(year, month - 1, day);
+        }
+        return null;
+    }
+
     fetch("https://ml09.org/ml09_wp/wp-json/wp/v2/atelier?embed&acf_format=standard")
         .then(response => response.json())
         .then(data => {
@@ -113,13 +136,11 @@
                 atelier.acf.nom
             );
 
-            // Trier par date_atelier décroissante (du plus récent au plus ancien)
+            // Trier par date décroissante (du plus récent au plus ancien)
             const sortedData = validAteliers.sort((a, b) => {
-                const [yearA, monthA, dayA] = a.acf.date_atelier.split('-');
-                const [yearB, monthB, dayB] = b.acf.date_atelier.split('-');
-                const dateA = new Date(yearA, monthA - 1, dayA);
-                const dateB = new Date(yearB, monthB - 1, dayB);
-                return dateB - dateA; // plus récent en premier
+                const dateA = parseDateACF(a.acf.date_atelier);
+                const dateB = parseDateACF(b.acf.date_atelier);
+                return (dateB || 0) - (dateA || 0);
             });
 
             // Ne garder que les 2 derniers ateliers
@@ -130,24 +151,11 @@
                 const atelierItem = document.createElement('div');
                 atelierItem.classList.add('atelier-card');
 
-                // Récupération de la date avec fallback
-                const rawDate = atelier.acf.date_atelier || atelier.acf.date || atelier.date;
-                let formattedDateStr = "Date non définie";
-                
-                if (rawDate) {
-                    const dateParts = rawDate.split(/[-/]/);
-                    let dateObj;
-                    if (dateParts.length === 3) {
-                        // Gère YYYY-MM-DD
-                        dateObj = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
-                    } else {
-                        dateObj = new Date(rawDate);
-                    }
-                    
-                    if (!isNaN(dateObj.getTime())) {
-                        formattedDateStr = dateObj.toLocaleDateString('fr-FR', { day: '2-digit', month: 'long' });
-                    }
-                }
+                // Récupération et formatage de la date
+                const dateObj = parseDateACF(atelier.acf.date_atelier);
+                const formattedDateStr = (dateObj && !isNaN(dateObj.getTime()))
+                    ? dateObj.toLocaleDateString('fr-FR', { day: '2-digit', month: 'long' })
+                    : "Date non définie";
 
                 atelierItem.innerHTML = `
                     <div class="actu">
@@ -231,40 +239,46 @@
                     // Vider le message de chargement
                     container.innerHTML = '';
 
-                    // Vérifier que data existe et contient des éléments
-                    if (!data || data.length === 0) {
+                    // Vérifier que data est un tableau et contient des éléments
+                    if (!Array.isArray(data) || data.length === 0) {
                         container.innerHTML = '<p style="text-align: center;">Aucun témoignage disponible pour le moment.</p>';
                         return;
                     }
 
-                    // Filtrer les témoignages qui ont toutes les données nécessaires
-                    const validTemoignages = data.filter(temoignage =>
-                        temoignage &&
-                        temoignage.acf &&
-                        temoignage.acf.prenom &&
-                        temoignage.acf.texte &&
-                        temoignage.acf.image &&
-                        temoignage.acf.image.url
-                    );
+                    data.forEach((temoignage, index) => {
+                        if (!temoignage || !temoignage.acf) return;
 
-                    validTemoignages.forEach((temoignage, index) => {
+                        const acf = temoignage.acf;
+
+                        // Récupérer le texte et le prénom avec vérifications strictes
+                        const texte = (typeof acf.texte === 'string' && acf.texte)
+                            || (temoignage.content && typeof temoignage.content.rendered === 'string' && temoignage.content.rendered)
+                            || '';
+                        const prenom = (typeof acf.prenom === 'string' && acf.prenom)
+                            || (temoignage.title && typeof temoignage.title.rendered === 'string' && temoignage.title.rendered)
+                            || '';
+
+                        // Ne pas afficher si texte ET prénom sont vides
+                        if (!texte && !prenom) return;
+
+                        // Récupérer l'URL de l'image
+                        let imageUrl = '';
+                        if (acf.image) {
+                            if (typeof acf.image === 'string') {
+                                imageUrl = acf.image;
+                            } else if (acf.image.url) {
+                                imageUrl = acf.image.url;
+                            }
+                        }
+
                         const div = document.createElement('div');
                         div.className = 'temoigne';
 
-                        // Structure de l'image avec fallback
-                        const imageUrl = (temoignage.acf && temoignage.acf.image) ? (temoignage.acf.image.url || temoignage.acf.image) : '';
-                        const imageHTML = `
-                        <div class="img_jeune">
-                        <img src="${imageUrl}" alt="" loading="lazy">
-                        </div>
-                        `;
+                        const imageHTML = imageUrl
+                            ? `<div class="img_jeune"><img src="${imageUrl}" alt="${prenom}" loading="lazy"></div>`
+                            : '';
 
-                        // Structure du texte avec fallback
-                        const texte = (temoignage.acf && temoignage.acf.texte) || temoignage.content?.rendered || '';
-                        const prenom = (temoignage.acf && temoignage.acf.prenom) || temoignage.title?.rendered || '';
-                        const texteHTML = `
-                        <p>${texte}<br><br>${prenom}</p>
-                        `;
+                        const texteHTML = `<p>${texte}${prenom ? '<br><br>' + prenom : ''}</p>`;
 
                         // Alternance image gauche / droite
                         div.innerHTML = (index % 2 === 0)
@@ -273,6 +287,11 @@
 
                         container.appendChild(div);
                     });
+
+                    // Si aucun témoignage n'a été affiché
+                    if (container.children.length === 0) {
+                        container.innerHTML = '<p style="text-align: center;">Aucun témoignage disponible pour le moment.</p>';
+                    }
                 })
                 .catch(error => {
                     console.error('Erreur lors du chargement des témoignages :', error);
