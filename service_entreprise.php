@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Au service des entreprises</title>
+    <title>Entreprises | ml09</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -31,7 +31,7 @@
 </header>
 
 <script>
-    const API_URL_ENTETE = "http://s1065353875.onlinehome.fr/ml09_wp/wp-json/wp/v2/entreprise_texte?embed&acf_format=standard";
+    const API_URL_ENTETE = "https://ml09.org/ml09_wp/wp-json/wp/v2/entreprise_texte?embed&acf_format=standard";
     const CACHE_KEY_ENTETE = "img_entete_cache";
     const CACHE_DURATION_ENTETE = 60 * 60 * 1000; // 1 heure
 
@@ -80,7 +80,7 @@
         <div id="texte_container"></div>
 
         <script>
-            fetch('http://s1065353875.onlinehome.fr/ml09_wp/wp-json/wp/v2/entreprise_texte?embed&acf_format=standard')
+            fetch('https://ml09.org/ml09_wp/wp-json/wp/v2/entreprise_texte?embed&acf_format=standard')
                 .then(res => res.json())
                 .then(data => {
                     const acf = data[0].acf;
@@ -207,7 +207,7 @@
         </p><br><br> -->
 
         <div class="btn_centre">
-            <a class="bnt_jaune" href="contact.php">Contactez-nous</a>
+            <strong><a class="bnt_jaune" href="contact.php">Contactez-nous</a></strong>
         </div>
 
 

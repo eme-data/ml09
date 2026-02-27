@@ -52,7 +52,7 @@
  <footer class="footer"></footer>
 
 <script>
-fetch("http://s1065353875.onlinehome.fr/ml09_wp/wp-json/wp/v2/footer?embed&acf_format=standard")
+fetch("https://ml09.org/ml09_wp/wp-json/wp/v2/footer?embed&acf_format=standard")
     .then(response => response.json())
     .then(data => {
         console.log(data);

@@ -2,14 +2,121 @@
 # This file is distributed under the same license as the Plugins - Advanced Custom Fields (ACF®) - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-09-26 21:53:53+0000\n"
+"PO-Revision-Date: 2026-01-08 15:59:08+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: GlotPress/4.0.1\n"
+"X-Generator: GlotPress/4.0.3\n"
 "Language: fr\n"
 "Project-Id-Version: Plugins - Advanced Custom Fields (ACF®) - Stable (latest release)\n"
+
+#: includes/fields/class-acf-field-image.php:144
+msgid "Remove image"
+msgstr "Retirer I’image"
+
+#: includes/fields/class-acf-field-file.php:161
+msgid "Remove file"
+msgstr "Retirer le fichier"
+
+#: includes/fields/class-acf-field-file.php:159
+msgid "Edit file"
+msgstr "Modifier le fichier"
+
+#: includes/fields/class-acf-field-file.php:140
+msgid "Selected file. Press tab to access file options."
+msgstr "Fichier sélectionné. Appuyer sur tabulation pour accéder aux options du fichier."
+
+#: includes/fields/class-acf-field-color_picker.php:306
+msgid "Show Color Wheel"
+msgstr "Afficher la roue des couleurs"
+
+#: includes/fields/class-acf-field-color_picker.php:296
+msgid "Use a custom color palette by entering comma separated hex or rgba values"
+msgstr "Utiliser une palette de couleurs personnalisée en saisissant des valeurs hexadécimales ou RGBA séparées par des virgules"
+
+#: includes/fields/class-acf-field-color_picker.php:295
+msgid "Custom Palette"
+msgstr "Palette personnalisée"
+
+#: includes/fields/class-acf-field-color_picker.php:275
+msgid "Use colors from theme.json"
+msgstr "Utiliser les couleurs du theme.json"
+
+#: includes/fields/class-acf-field-color_picker.php:274
+msgid "Specify custom colors"
+msgstr "Définir les couleurs personnalisées"
+
+#: includes/fields/class-acf-field-color_picker.php:268
+msgid "Custom Palette Source"
+msgstr "Source de la palette personnalisée"
+
+#: includes/fields/class-acf-field-color_picker.php:250
+msgid "Show Custom Palette"
+msgstr "Afficher la palette personnalisée"
+
+#: includes/admin/views/acf-field-group/options.php:271
+msgid "Display Title"
+msgstr "Titre affiché"
+
+#: includes/fields/class-acf-field-image.php:142
+msgid "Edit image"
+msgstr "Modifier l’image"
+
+#: includes/fields/class-acf-field-image.php:138
+msgid "Selected image. Press tab to access image options."
+msgstr "Image sélectionnée. Appuyer sur tabulation pour accéder aux options de l’image."
+
+#: includes/admin/tools/class-acf-admin-tool-import.php:64
+msgid "Select JSON File"
+msgstr "Sélectionner un fichier JSON"
+
+#: includes/admin/tools/class-acf-admin-tool-import.php:56
+msgid "Choose an ACF JSON file to import. Use only files from trusted sources, then click Import."
+msgstr "Choisissez un fichier JSON ACF à importer. Utilisez uniquement des fichiers provenant de sources fiables, puis cliquez sur Importer."
+
+#: includes/admin/tools/class-acf-admin-tool-import.php:70
+msgid "Import JSON containing field groups, post types, or taxonomies (trusted sources only)"
+msgstr "Importer un fichier JSON contenant des groupes de champs, des types de publication ou des taxonomies (sources fiables uniquement)"
+
+#: includes/fields/class-acf-field-date_picker.php:244
+#: includes/fields/class-acf-field-date_time_picker.php:231
+msgid "Use the current date as the default value for this field."
+msgstr "Utiliser la date actuelle comme valeur par défaut pour ce champ."
+
+#: includes/fields/class-acf-field-date_picker.php:243
+#: includes/fields/class-acf-field-date_time_picker.php:230
+msgid "Default to the current date"
+msgstr "Date actuelle par défaut"
+
+#: includes/assets.php:372
+msgid "Toggle panel"
+msgstr "Ouvrir/fermer le panneau"
+
+#: includes/admin/views/global/navigation.php:189
+#: includes/admin/views/global/navigation.php:193
+msgid "Edit ACF Field Groups"
+msgstr "Éditer les groupes de champs ACF"
+
+#: includes/fields/class-acf-field-select.php:457
+msgid "Allow content editors to create new options by typing in the Select input. Multiple options can be created from a comma separated string."
+msgstr "Autoriser les éditeurs/éditrices de contenu à créer de nouvelles options en saisissant dans la liste déroulante. Des options multiples peuvent être créées en séparant les chaînes par une virgule."
+
+#: includes/fields/class-acf-field-select.php:456
+msgid "Create Options"
+msgstr "Créer des options"
+
+#: includes/admin/views/global/navigation.php:110
+msgid "Get 4 months free on any WP Engine plan"
+msgstr "Profitez de 4 mois gratuits sur n’importe quelle offre WP Engine"
+
+#: includes/fields/class-acf-field-select.php:479
+msgid "Save Options"
+msgstr "Enregistrer les options"
+
+#: includes/fields/class-acf-field-select.php:480
+msgid "Save created options back to the \"Choices\" setting in the field definition."
+msgstr "Enregistrez les options créées dans le réglage « Choix » de la définition du champ."
 
 #: includes/validation.php:154
 msgid "Learn more"
@@ -29,6 +136,10 @@ msgstr "ACF n’a pas pu effectuer la validation car le jeton de sécurité four
 msgid "ACF was unable to perform validation because no nonce was received by the server."
 msgstr "ACF n’a pas pu effectuer la validation car aucun jeton de sécurité n’a été reçu par le serveur."
 
+#: src/Site_Health/Site_Health.php:298
+msgid "Update Source"
+msgstr "Source de mise à jour"
+
 #: includes/admin/views/acf-field-group/field.php:332
 msgid "Close and Add Field"
 msgstr "Fermer et Ajouter un Champ"
@@ -42,6 +153,10 @@ msgstr "Par défaut, seuls les administrateurs peuvent modifier ce réglage."
 #: includes/admin/views/acf-taxonomy/advanced-settings.php:817
 msgid "By default only super admin users can edit this setting."
 msgstr "Par défaut, seuls les super-admins peuvent modifier ce réglage."
+
+#: src/Site_Health/Site_Health.php:299
+msgid "wordpress.org"
+msgstr "WordPress.org"
 
 #: includes/fields/class-acf-field.php:373
 msgid "Allow Access to Value in Editor UI"
@@ -1206,6 +1321,62 @@ msgstr "La relation n’est pas égale à"
 #: includes/admin/post-types/admin-field-group.php:114
 msgid "Relationship is equal to"
 msgstr "La relation est égale à"
+
+#: includes/admin/views/acf-field-group/field.php:230
+msgid "Instructions for content editors. Shown when submitting data."
+msgstr "Instructions pour les éditeurs/éditrices de contenu. Affiché lors de l’envoi des données."
+
+#: includes/admin/post-types/admin-field-group.php:142
+msgid "Has any term selected"
+msgstr "Un terme a été sélectionné"
+
+#: includes/admin/post-types/admin-field-group.php:137
+msgid "Has no user selected"
+msgstr "N’a aucun compte sélectionné"
+
+#: includes/admin/post-types/admin-field-group.php:133
+msgid "User is not equal to"
+msgstr "Le compte n’est pas égal à"
+
+#: includes/admin/post-types/admin-field-group.php:132
+msgid "User is equal to"
+msgstr "Le compte est égal à"
+
+#: includes/admin/post-types/admin-field-group.php:119
+msgid "Post is not equal to"
+msgstr "La publication n’est pas égale à"
+
+#: src/Site_Health/Site_Health.php:677
+msgid "Registered Options Pages (PHP)"
+msgstr "Pages d’options enregistrées (PHP)"
+
+#: src/Site_Health/Site_Health.php:658
+msgid "Registered Options Pages (UI)"
+msgstr "Pages d’options enregistrées (UI)"
+
+#: src/Site_Health/Site_Health.php:628
+msgid "Options Pages UI Enabled"
+msgstr "Interface utilisateur des pages d’options activée"
+
+#: src/Site_Health/Site_Health.php:584
+msgid "Registered Post Types (UI)"
+msgstr "Types de publication enregistrés (interface utilisateur)"
+
+#: src/Site_Health/Site_Health.php:439
+msgid "Field Groups Enabled for REST API"
+msgstr "Groupes de champs activés pour l’API REST"
+
+#: src/Site_Health/Site_Health.php:328
+msgid "Subscription Expiry Date"
+msgstr "Date d’expiration de l’abonnement"
+
+#: src/Site_Health/Site_Health.php:258
+msgid "This section contains debug information about your ACF configuration which can be useful to provide to support."
+msgstr "Cette section contient des informations de débogage sur votre configuration ACF qui peuvent être utiles au support."
+
+#: includes/fields/class-acf-field-icon_picker.php:553
+msgid "Insert More Icon"
+msgstr "Insérer plus d’icônes"
 
 #: src/Blocks/Bindings.php:41
 msgctxt "The core ACF block binding source name for fields on the current page"
@@ -4178,27 +4349,27 @@ msgstr "https://www.advancedcustomfields.com/"
 msgid "Group"
 msgstr "Groupe"
 
-#: includes/fields/class-acf-field-google-map.php:230
+#: includes/fields/class-acf-field-google-map.php:231
 msgid "Customize the map height"
 msgstr "Personnaliser la hauteur de la carte"
 
-#: includes/fields/class-acf-field-google-map.php:229
+#: includes/fields/class-acf-field-google-map.php:230
 #: includes/fields/class-acf-field-image.php:258
 #: includes/fields/class-acf-field-image.php:294
 #: includes/fields/class-acf-field-oembed.php:261
 msgid "Height"
 msgstr "Hauteur"
 
-#: includes/fields/class-acf-field-google-map.php:218
+#: includes/fields/class-acf-field-google-map.php:219
 msgid "Set the initial zoom level"
 msgstr "Définir le niveau de zoom initial"
 
-#: includes/fields/class-acf-field-google-map.php:190
-#: includes/fields/class-acf-field-google-map.php:203
+#: includes/fields/class-acf-field-google-map.php:191
+#: includes/fields/class-acf-field-google-map.php:204
 msgid "Center"
 msgstr "Centrer"
 
-#: includes/fields/class-acf-field-google-map.php:157
+#: includes/fields/class-acf-field-google-map.php:159
 #: includes/fields/class-acf-field-relationship.php:609
 msgid "Search"
 msgstr "Rechercher"
@@ -4483,7 +4654,7 @@ msgstr "Lignes"
 msgid "Text Area"
 msgstr "Zone de texte"
 
-#: includes/api/api-helpers.php:1434 includes/api/api-term.php:149
+#: includes/api/api-helpers.php:1445 includes/api/api-term.php:149
 msgid "(no title)"
 msgstr "(aucun titre)"
 
@@ -4492,7 +4663,7 @@ msgctxt "verb"
 msgid "Update"
 msgstr "Mettre à jour"
 
-#: includes/api/api-helpers.php:2982
+#: includes/api/api-helpers.php:2993
 msgid "File size must not exceed %s."
 msgstr "La taille du fichier ne doit pas excéder %s."
 
@@ -4840,8 +5011,8 @@ msgstr "Groupe de champs"
 msgid "No Fields found"
 msgstr "Aucun champ trouvé"
 
-#: includes/fields/class-acf-field-google-map.php:191
-#: includes/fields/class-acf-field-google-map.php:204
+#: includes/fields/class-acf-field-google-map.php:192
+#: includes/fields/class-acf-field-google-map.php:205
 msgid "Center the initial map"
 msgstr "Centrer la carte initiale"
 
@@ -5231,7 +5402,7 @@ msgstr "La valeur correspond au modèle"
 msgid "Restricted"
 msgstr "Limité"
 
-#: includes/api/api-helpers.php:3009
+#: includes/api/api-helpers.php:3020
 msgid "File type must be %s."
 msgstr "Le type de fichier doit être %s."
 
@@ -5240,7 +5411,7 @@ msgstr "Le type de fichier doit être %s."
 #: includes/admin/views/acf-field-group/conditional-logic.php:191
 #: includes/admin/views/acf-field-group/location-group.php:14
 #: includes/admin/views/acf-field-group/locations.php:43
-#: includes/api/api-helpers.php:3006
+#: includes/api/api-helpers.php:3017
 msgid "or"
 msgstr "ou"
 
@@ -5420,11 +5591,11 @@ msgstr "Affiche le texte à côté de la case à cocher"
 msgid "Sub Fields"
 msgstr "Sous-champs"
 
-#: includes/fields/class-acf-field-google-map.php:217
+#: includes/fields/class-acf-field-google-map.php:218
 msgid "Zoom"
 msgstr "Zoom"
 
-#: includes/fields/class-acf-field-google-map.php:158
+#: includes/fields/class-acf-field-google-map.php:160
 msgid "Clear location"
 msgstr "Effacer la position"
 
@@ -5504,7 +5675,7 @@ msgstr "Fichier d’importation vide"
 msgid "Error uploading file. Please try again"
 msgstr "Erreur de téléversement du fichier. Veuillez réessayer."
 
-#: includes/fields/class-acf-field-google-map.php:162
+#: includes/fields/class-acf-field-google-map.php:156
 msgid "Search for address..."
 msgstr "Rechercher une adresse…"
 
@@ -5636,19 +5807,19 @@ msgstr "Lier les termes sélectionnés à la publication"
 msgid "Allow 'custom' values to be added"
 msgstr "Autoriser l’ajout de valeurs personnalisées"
 
-#: includes/api/api-helpers.php:2949
+#: includes/api/api-helpers.php:2960
 msgid "Image width must not exceed %dpx."
 msgstr "La largeur de l’image ne doit pas excéder %d px."
 
-#: includes/api/api-helpers.php:2961
+#: includes/api/api-helpers.php:2972
 msgid "Image height must be at least %dpx."
 msgstr "La hauteur de l’image doit être au minimum de %d px."
 
-#: includes/api/api-helpers.php:2965
+#: includes/api/api-helpers.php:2976
 msgid "Image height must not exceed %dpx."
 msgstr "La hauteur de l’image ne doit pas excéder %d px."
 
-#: includes/api/api-helpers.php:2978
+#: includes/api/api-helpers.php:2989
 msgid "File size must be at least %s."
 msgstr "La taille du fichier doit être d’au moins %s."
 
@@ -5764,7 +5935,7 @@ msgstr "Confirmez-vous ?"
 msgid "Uploaded to this post"
 msgstr "Téléversé sur cette publication"
 
-#: includes/api/api-helpers.php:2945
+#: includes/api/api-helpers.php:2956
 msgid "Image width must be at least %dpx."
 msgstr "La largeur de l’image doit être au minimum de %d px."
 
@@ -6013,7 +6184,7 @@ msgctxt "Select2 JS matches_0"
 msgid "No matches found"
 msgstr "Aucun résultat"
 
-#: includes/fields/class-acf-field-google-map.php:159
+#: includes/fields/class-acf-field-google-map.php:161
 msgid "Find current location"
 msgstr "Obtenir l’emplacement actuel"
 

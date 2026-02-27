@@ -112,12 +112,18 @@ nav {
 
 .logo {
     height: 60px;
+    display: block;
 }
 
 .logo>img {
-    width: 100%;
+    width: auto;
     height: 100%;
-    object-fit: cover;
+    max-width: 100%;
+    object-fit: contain;
+    display: block;
+    /* Amélioration pour iOS */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
 }
 
 .link>li>.dropdown {

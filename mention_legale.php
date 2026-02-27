@@ -25,7 +25,7 @@
         <div id="texte_container"></div>
 
         <script>
-            fetch('http://s1065353875.onlinehome.fr/ml09_wp/wp-json/wp/v2/mention_legale?embed&acf_format=standard')
+            fetch('https://ml09.org/ml09_wp/wp-json/wp/v2/mention_legale?embed&acf_format=standard')
             .then(res => res.json())
             .then(data => {
             document.getElementById('texte_container').innerHTML = data[0].acf.texte;

@@ -1,9 +1,9 @@
-fetch("http://s1065353875.onlinehome.fr/ml09_wp/wp-json/wp/v2/contact?embed&acf_format=standard")
+fetch("https://ml09.org/ml09_wp/wp-json/wp/v2/contact?embed&acf_format=standard")
     .then(response => response.json())
     .then(data => {
         let tout_contact = "";
 
-        const couleurs = ["#f2bb18", "#2597cb", "#27708c", "#092d44"]; 
+        const couleurs = ["#f2bb18", "#2597cb", "#27708c", "#092d44"];
 
         data.forEach((contact, index) => {
             const couleur = couleurs[index % couleurs.length];

@@ -47,7 +47,7 @@
 //     })
 //     .catch(error => console.error('Erreur lors du chargement des ateliers :', error));
 
-fetch("http://s1065353875.onlinehome.fr/ml09_wp/wp-json/wp/v2/atelier?embed&acf_format=standard")
+fetch("https://ml09.org/ml09_wp/wp-json/wp/v2/atelier?embed&acf_format=standard")
     .then(response => response.json())
     .then(data => {
         const atelierList = document.querySelector('.derniere_actu');
@@ -107,7 +107,7 @@ fetch("http://s1065353875.onlinehome.fr/ml09_wp/wp-json/wp/v2/atelier?embed&acf_
 // ------------------------------------ Liste des ateliers ------------------------------------
 
 
-fetch("http://s1065353875.onlinehome.fr/ml09_wp/wp-json/wp/v2/atelier?embed&acf_format=standard")
+fetch("https://ml09.org/ml09_wp/wp-json/wp/v2/atelier?embed&acf_format=standard")
     .then(response => response.json())
     .then(data => {
         const atelierList = document.querySelector('.box_actu');

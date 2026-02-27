@@ -2,28 +2,37 @@
 
    <div class="navbar">
     <a class="logo" href="index.php">
-        <img id="logo_menu" src="" alt="Logo du site">
+        <img id="logo_menu" src="img/logo_horizontal.png" alt="Logo Mission Locale Jeune Ariège" width="200" height="60">
     </a>
 
 <script>
-    const API_URL = "http://s1065353875.onlinehome.fr/ml09_wp/wp-json/wp/v2/menu?embed&acf_format=standard";
+    const API_URL = "https://ml09.org/ml09_wp/wp-json/wp/v2/menu?embed&acf_format=standard";
     const CACHE_KEY = "logo_menu_cache";
     const CACHE_DURATION = 60 * 60 * 1000; // 1 heure
 
     function setLogo(logo) {
         const imgHeader = document.getElementById("logo_menu");
-        imgHeader.src = logo.url;
-        imgHeader.alt = logo.alt || "Logo";
-        imgHeader.setAttribute("fetchpriority", "high");
+        if (imgHeader && logo && logo.url) {
+            imgHeader.src = logo.url;
+            imgHeader.alt = logo.alt || "Logo Mission Locale Jeune Ariège";
+            imgHeader.setAttribute("fetchpriority", "high");
+            // Forcer le rendu sur iOS
+            imgHeader.style.display = 'block';
+        }
     }
 
-    // 1. Vérifier s'il y a un cache valide
-    const cached = localStorage.getItem(CACHE_KEY);
-    if (cached) {
-        const parsed = JSON.parse(cached);
-        if (Date.now() - parsed.timestamp < CACHE_DURATION) {
-            setLogo(parsed.data);
+    // 1. Vérifier s'il y a un cache valide (avec gestion d'erreur pour iOS)
+    try {
+        const cached = localStorage.getItem(CACHE_KEY);
+        if (cached) {
+            const parsed = JSON.parse(cached);
+            if (Date.now() - parsed.timestamp < CACHE_DURATION) {
+                setLogo(parsed.data);
+            }
         }
+    } catch (e) {
+        // localStorage peut échouer sur iOS en mode privé
+        console.log("LocalStorage non disponible");
     }
 
     // 2. Toujours essayer de rafraîchir en arrière-plan
@@ -36,11 +45,15 @@
                 // Affiche le logo
                 setLogo(logo);
 
-                // Met en cache
-                localStorage.setItem(CACHE_KEY, JSON.stringify({
-                    data: logo,
-                    timestamp: Date.now()
-                }));
+                // Met en cache (avec gestion d'erreur pour iOS)
+                try {
+                    localStorage.setItem(CACHE_KEY, JSON.stringify({
+                        data: logo,
+                        timestamp: Date.now()
+                    }));
+                } catch (e) {
+                    console.log("Impossible de mettre en cache");
+                }
             }
         })
         .catch(err => console.error("Erreur lors du chargement du logo :", err));
@@ -244,7 +257,7 @@
         });
     });
 
-    fetch("http://s1065353875.onlinehome.fr/ml09_wp/wp-json/wp/v2/rapport_activite?acf_format=standard&per_page=1")
+    fetch("https://ml09.org/ml09_wp/wp-json/wp/v2/rapport_activite?acf_format=standard&per_page=1")
     .then(response => response.json())
     .then(data => {
         // data est un tableau => on prend le premier élément

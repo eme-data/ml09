@@ -36,7 +36,7 @@
 //     });
 
 
-fetch("http://s1065353875.onlinehome.fr/ml09_wp/wp-json/wp/v2/equipe?acf_format=standard&per_page=100&orderby=menu_order&order=asc")
+fetch("https://ml09.org/ml09_wp/wp-json/wp/v2/equipe?acf_format=standard&per_page=100&orderby=menu_order&order=asc")
     .then(response => response.json())
     .then(data => {
         let html_global = "";

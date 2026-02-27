@@ -4,7 +4,7 @@ Tags: cache, wp-rest-api, api, rest, rest cache
 Requires at least: 4.7
 Tested up to: 6.8
 Requires PHP: 7.0
-Stable tag: 2025.1.8
+Stable tag: 2026.1.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -29,6 +29,7 @@ This plugin offers:
 
 **WP REST Cache Pro**
 For more advanced features, check out our [WP REST Cache Pro](https://plugins.acato.nl/) plugin:
+
 * Configure custom endpoints for caching through the wp-admin interface.
 * Configure relationships within endpoints.
 * No coding required.
@@ -186,52 +187,29 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 == Changelog ==
 
-= 2025.1.8 =
-Release Date: October 14th, 2025
+= 2026.1.2 =
+Release Date: February 25th, 2026
 
-Improvement: Add option to flush or delete cache to cache details page.
+Fix: Prevent PHP warnings.
+Improvement: Add filter to disallow skip_cache parameter.
+Improvement: Added error log if set_transient fails.
+Improvement: Add support for flushing term cache when objects terms are modified. (Contribution by: Moshe Gross)
 
-= 2025.1.7 =
-Release Date: September 1st, 2025
+= 2026.1.1 =
+Release Date: January 20th, 2026
 
-Fix: Incorrect loading of translations in some cases.
+Fix: A XSS vulnerability in the plugin was discovered and fixed. It was reported by Nguyen Ba Khanh.
+Fix: Improved transition_post_status_logic. (Contribution by: Moshe Gross)
 
-= 2025.1.6 =
-Release Date: August 19th, 2025
+= 2026.1.0 =
+Release Date: January 14th, 2026
 
-Fix: Remove load_plugin_textdomain as it is no longer needed as of WP 4.6
+Improvement: Only flush caches on meta update if filter returns true.
 
-= 2025.1.5 =
-Release Date: August 18th, 2025
+= 2025.2.0 =
+Release Date: December 15th, 2025
 
-Fix: incorrect url when regenerating expired caches
-Fix: PHP Notice _load_textdomain_just_in_time was called incorrectly
-
-= 2025.1.4 =
-Release Date: June 25th, 2025
-
-Fix: Better checking of existing primary key before updating it.
-
-= 2025.1.3 =
-Release Date: June 25th, 2025
-
-Fix: Check if primary key exists before dropping it.
-
-= 2025.1.2 =
-Release Date: June 11th, 2025
-
-Fix: Make sure comment endpoints are flushed when the corresponding post is deleted or unpublished.
-Improvement: Add VDP to FAQ.
-
-= 2025.1.1 =
-Release Date: June 6th, 2025
-
-Fix: A path-traversal vulnerability in the plugin was discovered and fixed. It was reported by Darius Sveikauskas.
-
-= 2025.1.0 =
-Release Date: April 10th, 2025
-
-Improvement: Flush media endpoint caches when a new media has been uploaded.
+Improvement: Also flush caches when only the (post) meta is updated.
 
 = Earlier versions =
 For the changelog of earlier versions, please refer to [the changelog on Github](https://github.com/acato-plugins/wp-rest-cache/blob/master/changelog.md).

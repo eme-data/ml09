@@ -10,7 +10,7 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 // ------------------------------------ point ------------------------------------
 
-fetch('http://s1065353875.onlinehome.fr/ml09_wp/wp-json/wp/v2/point?embed&acf_format=standard&per_page=100')
+fetch('https://ml09.org/ml09_wp/wp-json/wp/v2/point?embed&acf_format=standard&per_page=100')
   .then(response => response.json())
   .then(data => {
     console.log(`${data.length} points chargés`);

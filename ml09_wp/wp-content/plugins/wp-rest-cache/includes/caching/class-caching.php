@@ -174,7 +174,7 @@ class Caching {
 
 		$this->register_endpoint_cache( $cache_key, $value, $uri, $request_headers, $request_method );
 
-		set_transient(
+		$result = set_transient(
 			$this->transient_key( $cache_key ),
 			$value,
 			$this->get_timeout(
@@ -187,6 +187,13 @@ class Caching {
 				]
 			)
 		);
+
+		if ( false === $result && defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+			// translators: %1$s: The endpoint URI, %2$s: The cache key.
+			$message = sprintf( __( 'WP REST Cache: Failed to set cache for endpoint: %1$s (cache_key: %2$s)', 'wp-rest-cache' ), $uri, $cache_key );
+			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+			error_log( $message );
+		}
 	}
 
 	/**
@@ -245,7 +252,7 @@ class Caching {
 		global $wpdb;
 
 		$uri_parts    = wp_parse_url( $endpoint );
-		$request_path = rtrim( $uri_parts['path'], '/' );
+		$request_path = rtrim( $uri_parts['path'] ?? '', '/' );
 
 		if ( self::FLUSH_STRICT === $strictness && isset( $uri_parts['query'] ) && ! empty( $uri_parts['query'] ) ) {
 			parse_str( $uri_parts['query'], $params );
@@ -357,7 +364,7 @@ class Caching {
 
 	/**
 	 * Fired upon WordPress 'transition_post_status' hook. Delete all non-single endpoint caches for this post type if
-	 * the new or the old status is 'publish'.
+	 * the new or the old status (but not both) is 'publish'.
 	 *
 	 * @param string   $new_status The new status of the post.
 	 * @param string   $old_status The old status of the post.
@@ -366,7 +373,7 @@ class Caching {
 	 * @return void
 	 */
 	public function transition_post_status( $new_status, $old_status, $post ) {
-		if ( 'publish' !== $new_status && 'publish' !== $old_status ) {
+		if ( $new_status === $old_status || ( 'publish' !== $new_status && 'publish' !== $old_status ) ) {
 			return;
 		}
 
@@ -374,6 +381,67 @@ class Caching {
 
 		if ( 'publish' === $old_status && post_type_supports( $post->post_type, 'comments' ) ) {
 			$this->delete_comment_type_related_caches();
+		}
+	}
+
+	/**
+	 * Fired upon WordPress 'updated_post_meta' hook. Delete all related caches.
+	 *
+	 * @param int    $meta_id ID of updated metadata entry.
+	 * @param int    $object_id ID of the object metadata is for.
+	 * @param string $meta_key Metadata key.
+	 * @param mixed  $_meta_value Metadata value.
+	 *
+	 * @return void
+	 */
+	public function updated_post_meta( $meta_id, $object_id, $meta_key, $_meta_value ) {
+		$this->updated_meta( 'post', $meta_id, $object_id, $meta_key, $_meta_value );
+	}
+
+	/**
+	 * Delete related caches when metadata is updated.
+	 *
+	 * @param string $meta_type The meta type, can be any of post, comment, term or user.
+	 * @param int    $meta_id ID of updated metadata entry.
+	 * @param int    $object_id ID of the object metadata is for.
+	 * @param string $meta_key Metadata key.
+	 * @param mixed  $_meta_value Metadata value.
+	 *
+	 * @return void
+	 */
+	private function updated_meta( $meta_type, $meta_id, $object_id, $meta_key, $_meta_value ) {
+		/**
+		 * Should caches be flushed on meta update?
+		 *
+		 * Allows external determination if caches should be flushed when meta is updated.
+		 *
+		 * @param boolean $flush Whether the cache should be flushed (true) or not (false)
+		 * @param string $meta_type The meta type, can be any of post, comment, term or user.
+		 * @param int $meta_id ID of updated metadata entry.
+		 * @param int $object_id ID of the object metadata is for.
+		 * @param string $meta_key Metadata key.
+		 * @param mixed $_meta_value Metadata value.
+		 *
+		 * @since 2026.1.0
+		 */
+		$flush = apply_filters( 'wp_rest_cache/flush_on_meta_update', false, $meta_type, $meta_id, $object_id, $meta_key, $_meta_value );
+
+		/**
+		 * Should caches be flushed on meta update? Based on meta type / meta key.
+		 *
+		 * Allows external determination if caches should be flushed when meta is updated.
+		 *
+		 * @param boolean $flush Whether the cache should be flushed (true) or not (false)
+		 * @param int $meta_id ID of updated metadata entry.
+		 * @param int $object_id ID of the object metadata is for.
+		 * @param mixed $_meta_value Metadata value.
+		 *
+		 * @since 2026.1.0
+		 */
+		$flush = apply_filters( "wp_rest_cache/flush_on_meta_update/{$meta_type}/{$meta_key}", $flush, $meta_id, $object_id, $_meta_value );
+		if ( true === $flush ) {
+			$meta_subtype = get_object_subtype( $meta_type, $object_id );
+			$this->delete_related_caches( $object_id, $meta_subtype );
 		}
 	}
 
@@ -438,6 +506,113 @@ class Caching {
 	}
 
 	/**
+	 * Fired upon WordPress 'updated_term_meta' hook. Delete all related caches.
+	 *
+	 * @param int    $meta_id ID of updated metadata entry.
+	 * @param int    $object_id ID of the object metadata is for.
+	 * @param string $meta_key Metadata key.
+	 * @param mixed  $_meta_value Metadata value.
+	 *
+	 * @return void
+	 */
+	public function updated_term_meta( $meta_id, $object_id, $meta_key, $_meta_value ) {
+		$this->updated_meta( 'term', $meta_id, $object_id, $meta_key, $_meta_value );
+	}
+
+	/**
+	 * Fired upon WordPress 'set_object_terms' hook. Delete all related caches.
+	 *
+	 * @since 2026.1.2
+	 *
+	 * @param int               $object_id  ID of the object.
+	 * @param array<int,string> $terms      An array of object term IDs or slugs.
+	 * @param array<int,int>    $tt_ids     An array of term taxonomy IDs.
+	 * @param string            $taxonomy   Taxonomy slug.
+	 * @param bool              $append     Whether to append new terms to the old terms.
+	 * @param array<int,int>    $old_tt_ids Old array of term taxonomy IDs.
+	 *
+	 * @return void
+	 */
+	public function set_object_terms( $object_id, $terms, $tt_ids, $taxonomy, $append, $old_tt_ids ) {
+		/**
+		 * Should caches be flushed on setting object terms?
+		 *
+		 * Allows to disable cache flushing when terms are set on an object.
+		 *
+		 * @since 2026.1.2
+		 *
+		 * @param bool               $flush       Whether the cache should be flushed (true) or not (false).
+		 * @param int                $object_id   ID of the object.
+		 * @param array<int,string>  $terms       An array of object term IDs or slugs.
+		 * @param array<int,int>     $tt_ids      An array of term taxonomy IDs.
+		 * @param string             $taxonomy    Taxonomy slug.
+		 * @param bool               $append      Whether to append new terms to the old terms.
+		 * @param array<int,int>     $old_tt_ids  Old array of term taxonomy IDs.
+		 */
+		$flush = apply_filters( 'wp_rest_cache/flush_on_set_terms', true, $object_id, $terms, $tt_ids, $taxonomy, $append, $old_tt_ids );
+
+		if ( true !== $flush ) {
+			return;
+		}
+
+		// Get old term IDs.
+		$old_term_ids = get_terms(
+			[
+				'taxonomy'         => $taxonomy,
+				'term_taxonomy_id' => (array) $old_tt_ids,
+				'hide_empty'       => false,
+				'fields'           => 'ids',
+			]
+		);
+
+		if ( is_wp_error( $old_term_ids ) ) {
+			$old_term_ids = [];
+		}
+
+		// Get new term IDs.
+		$new_term_ids = wp_get_object_terms( $object_id, $taxonomy, [ 'fields' => 'ids' ] );
+
+		if ( is_wp_error( $new_term_ids ) ) {
+			$new_term_ids = [];
+		}
+
+		if ( $append ) {
+			// Added terms only.
+			$affected_term_ids = array_diff( $new_term_ids, $old_term_ids );
+		} else {
+			// Added and removed terms.
+			$affected_term_ids = array_unique(
+				array_merge(
+					array_diff( $new_term_ids, $old_term_ids ),
+					array_diff( $old_term_ids, $new_term_ids )
+				)
+			);
+		}
+
+		if ( empty( $affected_term_ids ) ) {
+			return;
+		}
+
+		$term_ids_to_invalidate = $affected_term_ids;
+
+		// Get parent term IDs for hierarchical taxonomies.
+		if ( is_taxonomy_hierarchical( $taxonomy ) ) {
+			foreach ( $affected_term_ids as $term_id ) {
+				$ancestors = get_ancestors( (int) $term_id, $taxonomy );
+				if ( $ancestors ) {
+					$term_ids_to_invalidate = array_merge( $term_ids_to_invalidate, $ancestors );
+				}
+			}
+
+			$term_ids_to_invalidate = array_unique( $term_ids_to_invalidate );
+		}
+
+		foreach ( $term_ids_to_invalidate as $term_id ) {
+			$this->delete_related_caches( (int) $term_id, $taxonomy );
+		}
+	}
+
+	/**
 	 * Fired upon WordPress 'profile_update' hook. Delete all related caches for this user.
 	 *
 	 * @param int $user_id User ID.
@@ -470,6 +645,20 @@ class Caching {
 	}
 
 	/**
+	 * Fired upon WordPress 'updated_user_meta' hook. Delete all related caches.
+	 *
+	 * @param int    $meta_id ID of updated metadata entry.
+	 * @param int    $object_id ID of the object metadata is for.
+	 * @param string $meta_key Metadata key.
+	 * @param mixed  $_meta_value Metadata value.
+	 *
+	 * @return void
+	 */
+	public function updated_user_meta( $meta_id, $object_id, $meta_key, $_meta_value ) {
+		$this->updated_meta( 'user', $meta_id, $object_id, $meta_key, $_meta_value );
+	}
+
+	/**
 	 * Fired upon WordPress 'deleted_comment', 'trashed_comment' and 'spammed_comment' hooks. Delete all related caches
 	 * for this comment, including all single cache statistics if comment is deleted.
 	 *
@@ -497,6 +686,20 @@ class Caching {
 	 */
 	public function delete_comment_type_related_caches() {
 		$this->delete_object_type_caches( 'comment' );
+	}
+
+	/**
+	 * Fired upon WordPress 'updated_comment_meta' hook. Delete all related caches.
+	 *
+	 * @param int    $meta_id ID of updated metadata entry.
+	 * @param int    $object_id ID of the object metadata is for.
+	 * @param string $meta_key Metadata key.
+	 * @param mixed  $_meta_value Metadata value.
+	 *
+	 * @return void
+	 */
+	public function updated_comment_meta( $meta_id, $object_id, $meta_key, $_meta_value ) {
+		$this->updated_meta( 'comment', $meta_id, $object_id, $meta_key, $_meta_value );
 	}
 
 	/**
@@ -786,6 +989,19 @@ class Caching {
 			return;
 		}
 
+		/**
+		 * Insert cache relation.
+		 *
+		 * Allows external action upon inserting a cache relation.
+		 *
+		 * @since 2025.2.0
+		 *
+		 * @param int $cache_id The row id of the current cache.
+		 * @param int $object_id The id of the object the cache has a relation with.
+		 * @param string $object_type The object type of the object the cache has a relation with.
+		 */
+		do_action( 'wp_rest_cache/insert_cache_relation', $cache_id, $object_id, $object_type );
+
 		$wpdb->replace(
 			$this->db_table_relations,
 			[
@@ -1070,6 +1286,8 @@ class Caching {
 	 * @return string The where clause.
 	 */
 	private function get_where_clause( $api_type, &$prepare_args ) {
+		global $wpdb;
+
 		$where          = '`cache_type` = %s AND `deleted` = %d';
 		$prepare_args[] = $api_type;
 		$prepare_args[] = false;
@@ -1080,8 +1298,9 @@ class Caching {
 
 		if ( ! empty( $search ) ) {
 			$where         .= ' AND ( `request_uri` LIKE %s OR `object_type` LIKE %s )';
-			$prepare_args[] = '%' . $search . '%';
-			$prepare_args[] = '%' . $search . '%';
+			$search_escaped = '%' . $wpdb->esc_like( $search ) . '%';
+			$prepare_args[] = $search_escaped;
+			$prepare_args[] = $search_escaped;
 		}
 
 		return $where;

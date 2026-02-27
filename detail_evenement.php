@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const evenementId = new URLSearchParams(window.location.search).get('id');
 
     if (evenementId) {
-        fetch("http://s1065353875.onlinehome.fr/ml09_wp/wp-json/wp/v2/evenement?embed&acf_format=standard")
+        fetch("https://ml09.org/ml09_wp/wp-json/wp/v2/evenement?embed&acf_format=standard")
             .then(response => {
                 if (!response.ok) throw new Error("Erreur de requête");
                 return response.json();
