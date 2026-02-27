@@ -64,8 +64,9 @@ fetch("https://ml09.org/ml09_wp/wp-json/wp/v2/footer?embed&acf_format=standard")
         footer = `
         <div class="footer-container">
             <div class="footer-logo">
-                <img src="${ligne.acf.logo_mission_locale ? ligne.acf.logo_mission_locale.url : ''}"
-     alt="Logo Mission Locale Jeune Ariège" class="footer-logo">
+                <img src="${ligne.acf.logo_mission_locale ? ligne.acf.logo_mission_locale.url : 'img/logo_footer.webp'}"
+     alt="Logo Mission Locale Jeune Ariège" class="footer-logo"
+     onerror="this.onerror=null; this.src='img/logo_footer.webp';">
                 <div class="footer-social">
                     <a href="${ligne.acf.instagram || '#'}" class="social-icon"><i class="fab fa-instagram"></i></a>
                     <a href="${ligne.acf.facebook || '#'}" class="social-icon"><i class="fab fa-facebook-f"></i></a>
