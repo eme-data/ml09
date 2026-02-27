@@ -34,39 +34,61 @@
         </div>
 
         <script>
+            function showFallbackHeader() {
+                const img_header = document.querySelector('.img_header');
+                img_header.innerHTML = `
+                    <img src="img/accueil.webp"
+                         alt="Mission Locale Jeune Ariège"
+                         width="1200"
+                         height="600"
+                         fetchpriority="high">
+                `;
+                img_header.style.minHeight = '';
+                img_header.style.backgroundColor = '';
+                img_header.style.display = '';
+                img_header.style.alignItems = '';
+                img_header.style.justifyContent = '';
+            }
+
+            function showApiHeader(url, alt) {
+                const img_header = document.querySelector('.img_header');
+                const testImg = new Image();
+                testImg.onload = function() {
+                    img_header.innerHTML = `
+                        <img src="${url}"
+                             alt="${alt || 'Mission Locale Jeune Ariège'}"
+                             width="1200"
+                             height="600"
+                             fetchpriority="high">
+                    `;
+                    img_header.style.minHeight = '';
+                    img_header.style.backgroundColor = '';
+                    img_header.style.display = '';
+                    img_header.style.alignItems = '';
+                    img_header.style.justifyContent = '';
+                };
+                // Si l'image WordPress est inaccessible, on affiche le fallback local
+                testImg.onerror = showFallbackHeader;
+                testImg.src = url;
+            }
+
             fetch("https://ml09.org/ml09_wp/wp-json/wp/v2/image_accueil?embed&acf_format=standard")
                 .then(response => response.json())
                 .then(data => {
-                    const img_header = document.querySelector('.img_header');
-
-                    // Vérifier que data existe et contient des éléments
                     if (!data || data.length === 0) {
-                        img_header.style.display = 'none';
+                        showFallbackHeader();
                         return;
                     }
-
-                    // Prendre seulement le premier avec vérification
                     const firstImage = data[0];
                     if (firstImage && firstImage.acf && firstImage.acf.image && firstImage.acf.image.url) {
-                        img_header.innerHTML = `
-                            <img src="${firstImage.acf.image.url}"
-                                 alt="${firstImage.acf.image.alt || 'Mission Locale Jeune Ariège'}"
-                                 width="1200"
-                                 height="600"
-                                 fetchpriority="high">
-                        `;
-                        // Retirer le style de chargement
-                        img_header.style.minHeight = '';
-                        img_header.style.backgroundColor = '';
-                        img_header.style.display = '';
-                        img_header.style.alignItems = '';
-                        img_header.style.justifyContent = '';
+                        showApiHeader(firstImage.acf.image.url, firstImage.acf.image.alt);
+                    } else {
+                        showFallbackHeader();
                     }
                 })
                 .catch(error => {
                     console.error('Erreur lors du chargement de l\'image d\'en-tête :', error);
-                    const img_header = document.querySelector('.img_header');
-                    img_header.style.display = 'none';
+                    showFallbackHeader();
                 });
         </script>
 
@@ -261,13 +283,18 @@
                         // Ne pas afficher si texte ET prénom sont vides
                         if (!texte && !prenom) return;
 
-                        // Récupérer l'URL de l'image
+                        // Récupérer l'URL de l'image (valider que c'est bien une URL)
                         let imageUrl = '';
                         if (acf.image) {
+                            let rawUrl = '';
                             if (typeof acf.image === 'string') {
-                                imageUrl = acf.image;
+                                rawUrl = acf.image;
                             } else if (acf.image.url) {
-                                imageUrl = acf.image.url;
+                                rawUrl = acf.image.url;
+                            }
+                            // Ne garder que les vraies URLs
+                            if (rawUrl && (rawUrl.startsWith('http://') || rawUrl.startsWith('https://') || rawUrl.startsWith('/'))) {
+                                imageUrl = rawUrl;
                             }
                         }
 
@@ -275,7 +302,7 @@
                         div.className = 'temoigne';
 
                         const imageHTML = imageUrl
-                            ? `<div class="img_jeune"><img src="${imageUrl}" alt="${prenom}" loading="lazy"></div>`
+                            ? `<div class="img_jeune"><img src="${imageUrl}" alt="${prenom}" loading="lazy" onerror="this.parentElement.style.display='none'"></div>`
                             : '';
 
                         const texteHTML = `<p>${texte}${prenom ? '<br><br>' + prenom : ''}</p>`;

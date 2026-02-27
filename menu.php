@@ -13,11 +13,16 @@
     function setLogo(logo) {
         const imgHeader = document.getElementById("logo_menu");
         if (imgHeader && logo && logo.url) {
-            imgHeader.src = logo.url;
-            imgHeader.alt = logo.alt || "Logo Mission Locale Jeune Ariège";
-            imgHeader.setAttribute("fetchpriority", "high");
-            // Forcer le rendu sur iOS
-            imgHeader.style.display = 'block';
+            // Tester que l'image se charge vraiment avant de remplacer le fallback local
+            const testImg = new Image();
+            testImg.onload = function() {
+                imgHeader.src = logo.url;
+                imgHeader.alt = logo.alt || "Logo Mission Locale Jeune Ariège";
+                imgHeader.setAttribute("fetchpriority", "high");
+                imgHeader.style.display = 'block';
+            };
+            // Si l'URL de l'API est cassée, on garde le PNG local (img/logo_horizontal.png)
+            testImg.src = logo.url;
         }
     }
 
