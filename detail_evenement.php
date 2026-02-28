@@ -32,12 +32,12 @@
             // ------------------------------------ Détails d’un evenement ------------------------------------
     function parseDateACF(dateStr) {
         if (!dateStr) return null;
-        if (dateStr.includes(‘/’)) {
-            const [day, month, year] = dateStr.split(‘/’).map(Number);
+        if (dateStr.includes('/')) {
+            const [day, month, year] = dateStr.split('/').map(Number);
             return new Date(year, month - 1, day);
         }
-        if (dateStr.includes(‘-’)) {
-            const [year, month, day] = dateStr.split(‘-’).map(Number);
+        if (dateStr.includes('-')) {
+            const [year, month, day] = dateStr.split('-').map(Number);
             return new Date(year, month - 1, day);
         }
         if (dateStr.length === 8 && !isNaN(dateStr)) {
@@ -46,8 +46,8 @@
         return null;
     }
 
-document.addEventListener(‘DOMContentLoaded’, () => {
-    const evenementId = new URLSearchParams(window.location.search).get(‘id’);
+document.addEventListener('DOMContentLoaded', () => {
+    const evenementId = new URLSearchParams(window.location.search).get('id');
 
     if (evenementId) {
         fetch("https://ml09.org/ml09_wp/wp-json/wp/v2/evenement?embed&acf_format=standard&per_page=100")
@@ -58,21 +58,21 @@ document.addEventListener(‘DOMContentLoaded’, () => {
             .then(data => {
                 const evenement = data.find(a => a.id == evenementId);
                 if (evenement) {
-                    const detail = document.querySelector(‘.evenement-detail’);
+                    const detail = document.querySelector('.evenement-detail');
                     if (detail) {
                         // Vérifier si l’image existe et n’est pas false
-                        let imageHTML = ‘’;
+                        let imageHTML = '';
                         if (evenement.acf.img && evenement.acf.img !== false && evenement.acf.img.url) {
                             imageHTML = `
                                 <div class="image-wrapper">
-                                    <img src="${evenement.acf.img.url}" alt="${evenement.acf.img.alt || ‘’}">
+                                    <img src="${evenement.acf.img.url}" alt="${evenement.acf.img.alt || ''}">
                                 </div><br><br>
                             `;
                         }
 
                         const dateObj = parseDateACF(evenement.acf.date);
                         const formattedDate = (dateObj && !isNaN(dateObj.getTime()))
-                            ? dateObj.toLocaleDateString(‘fr-FR’)
+                            ? dateObj.toLocaleDateString('fr-FR')
                             : "Date non définie";
 
                         detail.innerHTML = `
@@ -80,10 +80,10 @@ document.addEventListener(‘DOMContentLoaded’, () => {
                                 <i class="fa-solid fa-circle-arrow-left" style="font-size: 30px;"></i>
                             </a><br><br>
                             ${imageHTML}
-                            <h1>${evenement.acf.nom || ‘’}</h1>
+                            <h1>${evenement.acf.nom || ''}</h1>
                             <h3>Date : ${formattedDate}</h3>
-                            <h3>${evenement.acf.ville || ‘’}</h3><br>
-                            <p class="description_evenement">${evenement.acf.detail || ‘’}</p>
+                            <h3>${evenement.acf.ville || ''}</h3><br>
+                            <p class="description_evenement">${evenement.acf.detail || ''}</p>
                         `;
                     }
                 } else {
