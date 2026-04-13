@@ -753,9 +753,22 @@ header {
 
 }
 
+@media(max-width: 770px) {
+
+    /*----------------Header----------------*/
+
+    header {
+        padding-top: 70px;
+    }
+}
+
 @media(max-width: 430px) {
 
     /*----------------Header----------------*/
+
+    header {
+        padding-top: 50px;
+    }
 
     .slogan {
         top: 10%;

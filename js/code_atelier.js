@@ -121,7 +121,7 @@ fetch("https://ml09.org/ml09_wp/wp-json/wp/v2/atelier?embed&acf_format=standard"
 // ------------------------------------ Liste des ateliers ------------------------------------
 
 
-fetch("https://ml09.org/ml09_wp/wp-json/wp/v2/atelier?embed&acf_format=standard")
+fetch("https://ml09.org/ml09_wp/wp-json/wp/v2/atelier?embed&acf_format=standard&per_page=100")
     .then(response => response.json())
     .then(data => {
         const atelierList = document.querySelector('.box_actu');

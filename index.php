@@ -253,7 +253,7 @@
         </div> -->
 
         <script>
-            fetch('https://ml09.org/ml09_wp/wp-json/wp/v2/temoignage?embed&acf_format=standard')
+            fetch('https://ml09.org/ml09_wp/wp-json/wp/v2/temoignage?embed&acf_format=standard&per_page=100')
                 .then(response => response.json())
                 .then(data => {
                     const container = document.getElementById('box_temoignage');
